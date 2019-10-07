@@ -3,19 +3,28 @@ driver:
   name: vagrant
   customize:
     cableconnected1: 'on'
+  network:
+    - ["forwarded_port", {guest: 80, host: 8080}]
 
 provisioner:
   name: chef_zero
   deprecations_as_errors: true
+  always_update_cookbooks: true
+  client_rb:
+    chef_license: accept
 
 verifier:
   name: inspec
 
 
 platforms:
-  - name: centos-7
+#  - name: centos-7
+  - name: ubuntu-18.04
 
 suites:
   - name: default
     run_list:
       - recipe[zammad::default]
+    attributes:
+      zammad:
+        nginx_bind_all: true

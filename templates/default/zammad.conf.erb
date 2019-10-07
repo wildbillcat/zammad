@@ -13,9 +13,10 @@ upstream zammad-websocket {
 server {
     listen 80;
 
+  <% if !@bind_all %>
     # replace 'localhost' with your fqdn if you want to use zammad from remote
-    server_name <%= node['zammad']['nginx_server_name'] %>;
-
+    server_name <%= @server_name %>;
+  <% end %>
     root /opt/zammad/public;
 
     access_log /var/log/nginx/zammad.access.log;
